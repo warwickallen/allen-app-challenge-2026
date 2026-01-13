@@ -2,7 +2,7 @@ import { requireAuth } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { canEditApp } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import TransactionFormClient from '../new/TransactionFormClient'
+import TransactionFormClient from '../../new/TransactionFormClient'
 
 interface PageProps {
   params: { id: string; transactionId: string }
