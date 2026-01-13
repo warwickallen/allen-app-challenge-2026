@@ -17,25 +17,66 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
 
+    console.log('[LOGIN] Form submitted', {
+      email: email ? `${email.substring(0, 3)}***` : 'empty',
+      hasPassword: !!password,
+      timestamp: new Date().toISOString(),
+    })
+
     try {
+      console.log('[LOGIN] Creating Supabase client...')
       const supabase = createClient()
 
+      // Log environment variable presence (without exposing values)
+      console.log('[LOGIN] Supabase client created', {
+        hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+        hasSupabaseAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        supabaseUrlLength: process.env.NEXT_PUBLIC_SUPABASE_URL?.length || 0,
+        anonKeyLength: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length || 0,
+      })
+
+      console.log('[LOGIN] Attempting sign in with password...')
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (signInError) {
+        console.error('[LOGIN] Sign in error:', {
+          message: signInError.message,
+          status: signInError.status,
+          name: signInError.name,
+          timestamp: new Date().toISOString(),
+        })
         setError('Invalid email or password')
         setLoading(false)
         return
       }
 
+      console.log('[LOGIN] Sign in successful', {
+        hasUser: !!data.user,
+        userId: data.user?.id,
+        userEmail: data.user?.email,
+        hasSession: !!data.session,
+        sessionExpiresAt: data.session?.expires_at,
+        timestamp: new Date().toISOString(),
+      })
+
       if (data.user) {
+        console.log('[LOGIN] Redirecting to leaderboard...')
         router.push('/leaderboard')
         router.refresh()
+      } else {
+        console.warn('[LOGIN] Sign in succeeded but no user data returned')
+        setError('Login succeeded but user data is missing')
+        setLoading(false)
       }
     } catch (err) {
+      console.error('[LOGIN] Unexpected error during login:', {
+        error: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        timestamp: new Date().toISOString(),
+      })
       setError('An error occurred. Please try again.')
       setLoading(false)
     }

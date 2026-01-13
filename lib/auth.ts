@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
  * Get the current authenticated user
  */
 export async function getCurrentUser() {
+  console.log('[AUTH] Getting current user...')
   const supabase = await createClient()
 
   const {
@@ -12,16 +13,58 @@ export async function getCurrentUser() {
     error,
   } = await supabase.auth.getUser()
 
-  if (error || !user) {
+  if (error) {
+    console.error('[AUTH] Error getting user:', {
+      message: error.message,
+      status: error.status,
+      name: error.name,
+      timestamp: new Date().toISOString(),
+    })
     return null
   }
 
+  if (!user) {
+    console.log('[AUTH] No user found in session')
+    return null
+  }
+
+  console.log('[AUTH] User found, fetching participant details', {
+    userId: user.id,
+    userEmail: user.email,
+    timestamp: new Date().toISOString(),
+  })
+
   // Get participant details
-  const { data: participant } = await supabase
+  const { data: participant, error: participantError } = await supabase
     .from('participants')
     .select('*')
     .eq('id', user.id)
     .single()
+
+  if (participantError) {
+    console.error('[AUTH] Error fetching participant:', {
+      message: participantError.message,
+      code: participantError.code,
+      details: participantError.details,
+      hint: participantError.hint,
+      timestamp: new Date().toISOString(),
+    })
+    return null
+  }
+
+  if (!participant) {
+    console.warn('[AUTH] User authenticated but no participant record found', {
+      userId: user.id,
+      timestamp: new Date().toISOString(),
+    })
+    return null
+  }
+
+  console.log('[AUTH] Participant found', {
+    participantId: participant.id,
+    role: participant.role,
+    timestamp: new Date().toISOString(),
+  })
 
   return participant
 }
