@@ -21,11 +21,11 @@ export default function Navigation({ user }: NavigationProps) {
   }
 
   return (
-    <nav className="bg-cheese-500 text-white shadow-lg">
+    <nav className="bg-cheese-500 text-black shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
-            <Link href="/leaderboard" className="flex items-center space-x-2 hover:text-cheese-100">
+            <Link href="/leaderboard" className="flex items-center space-x-2 hover:text-gray-700">
               <span className="text-2xl">🧀</span>
               <span className="font-bold text-lg">Allen App Challenge</span>
             </Link>
