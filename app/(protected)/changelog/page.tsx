@@ -103,7 +103,7 @@ function ChangeDetails({ change }: { change: ChangeLog }) {
           <>
             <p>
               <span className="font-semibold">{newValues.transaction_type}:</span>{' '}
-              £{Number(newValues.amount || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              ${Number(newValues.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
             {newValues.description && (
               <p className="text-xs text-gray-500">{newValues.description}</p>
@@ -149,7 +149,7 @@ function ChangeDetails({ change }: { change: ChangeLog }) {
     }
     return (
       <p className="text-red-600 line-through text-xs">
-        {oldValues.transaction_type}: £{Number(oldValues.amount || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        {oldValues.transaction_type}: ${Number(oldValues.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </p>
     )
   }

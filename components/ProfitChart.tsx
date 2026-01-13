@@ -38,7 +38,7 @@ export default function ProfitChart({ history }: ProfitChartProps) {
           <YAxis
             stroke="#6b7280"
             style={{ fontSize: '12px' }}
-            tickFormatter={(value) => `£${value.toLocaleString()}`}
+            tickFormatter={(value) => `$${value.toLocaleString()}`}
           />
           <Tooltip
             formatter={(value: number) => formatCurrency(value)}
