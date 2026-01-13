@@ -103,7 +103,7 @@ export default function TransactionFormClient({ appId, transaction }: Transactio
             Amount <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-2.5 text-gray-500">£</span>
+            <span className="absolute left-3 top-2.5 text-gray-500">$</span>
             <input
               id="amount"
               type="number"
