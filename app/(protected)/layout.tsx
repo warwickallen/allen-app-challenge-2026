@@ -7,11 +7,18 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode
 }) {
+  console.log('[PROTECTED LAYOUT] Checking authentication...')
   const user = await getCurrentUser()
 
   if (!user) {
+    console.log('[PROTECTED LAYOUT] No user found, redirecting to login')
     redirect('/login')
   }
+
+  console.log('[PROTECTED LAYOUT] User authenticated', {
+    userId: user.id,
+    role: user.role,
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cheese-50 via-cheese-100 to-cream-light">
