@@ -77,7 +77,7 @@ export default async function DashboardPage() {
         <h2 className="text-2xl font-bold text-cheese-700 mb-4">My Apps</h2>
         {!apps || apps.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-4">You haven't created any apps yet.</p>
+            <p className="text-gray-500 mb-4">You haven&apos;t created any apps yet.</p>
             <Link
               href="/dashboard/apps/new"
               className="inline-block bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-md"

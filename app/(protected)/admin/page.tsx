@@ -88,7 +88,7 @@ export default async function AdminDashboardPage() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-center py-8">No monthly winners calculated yet. Click "Calculate Monthly Winners" to compute them.</p>
+          <p className="text-gray-500 text-center py-8">No monthly winners calculated yet. Click &quot;Calculate Monthly Winners&quot; to compute them.</p>
         )}
       </section>
 
