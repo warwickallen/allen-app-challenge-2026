@@ -74,7 +74,7 @@ export default async function AppDetailPage({ params }: PageProps) {
         {canEdit && (
           <Link
             href={`/dashboard/apps/${params.id}/edit`}
-            className="bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-md"
+            className="bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-4 rounded-lg transition-colors shadow-md"
           >
             Edit App
           </Link>
@@ -102,7 +102,7 @@ export default async function AppDetailPage({ params }: PageProps) {
           {canEdit && (
             <Link
               href={`/dashboard/apps/${params.id}/transactions/new`}
-              className="bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-md text-sm"
+              className="bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-4 rounded-lg transition-colors shadow-md text-sm"
             >
               + Add Transaction
             </Link>
@@ -130,7 +130,7 @@ function TransactionsList({
         {canEdit && (
           <Link
             href={`/dashboard/apps/${appId}/transactions/new`}
-            className="inline-block bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-md text-sm"
+            className="inline-block bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-4 rounded-lg transition-colors shadow-md text-sm"
           >
             Add Your First Transaction
           </Link>

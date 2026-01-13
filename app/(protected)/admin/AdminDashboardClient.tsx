@@ -53,7 +53,7 @@ export default function AdminDashboardClient() {
       <button
         onClick={handleCalculateMonthlyWinners}
         disabled={loading}
-        className="bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+        className="bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
       >
         {loading ? 'Calculating...' : 'Calculate Monthly Winners'}
       </button>
