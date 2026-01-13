@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold text-cheese-700">My Dashboard</h1>
         <Link
           href="/dashboard/apps/new"
-          className="bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-md"
+          className="bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-6 rounded-lg transition-colors shadow-md"
         >
           + Create New App
         </Link>
@@ -80,7 +80,7 @@ export default async function DashboardPage() {
             <p className="text-gray-500 mb-4">You haven&apos;t created any apps yet.</p>
             <Link
               href="/dashboard/apps/new"
-              className="inline-block bg-cheese-500 hover:bg-cheese-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-md"
+              className="inline-block bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-6 rounded-lg transition-colors shadow-md"
             >
               Create Your First App
             </Link>

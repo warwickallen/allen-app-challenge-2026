@@ -161,7 +161,7 @@ export default function TransactionFormClient({ appId, transaction }: Transactio
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2 bg-cheese-500 hover:bg-cheese-600 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+            className="px-6 py-2 bg-cheese-500 hover:bg-cheese-600 text-black font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
           >
             {loading ? (isEdit ? 'Updating...' : 'Creating...') : (isEdit ? 'Update Transaction' : 'Add Transaction')}
           </button>
