@@ -89,6 +89,12 @@ export default function LoginPage() {
           <h1 className="text-4xl font-bold text-cheese-600 mb-2">🧀</h1>
           <h2 className="text-2xl font-bold text-gray-800">Allen App Challenge 2026</h2>
           <p className="text-gray-600 mt-2">Leaderboard Login</p>
+          <Link
+            href="/about"
+            className="text-sm text-cheese-600 hover:text-cheese-700 underline mt-2 inline-block"
+          >
+            Learn more about the challenge
+          </Link>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
