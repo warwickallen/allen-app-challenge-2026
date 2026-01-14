@@ -84,7 +84,7 @@ export default async function AppDetailPage({ params }: PageProps) {
       {/* Profit Display */}
       <div className="bg-gradient-to-r from-cheese-400 to-orange-cheese rounded-lg p-6 shadow-lg border-2 border-cheese-600">
         <h2 className="text-sm font-medium text-white mb-2">Current Profit</h2>
-        <p className={`text-4xl font-bold ${profit >= 0 ? 'text-white' : 'text-red-100'}`}>
+        <p className={`text-4xl font-bold ${profit >= 0 ? 'text-gray-900' : 'text-red-800'}`}>
           {formatCurrency(profit)}
         </p>
       </div>
