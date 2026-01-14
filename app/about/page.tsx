@@ -72,6 +72,13 @@ export default async function AboutPage() {
             </section>
 
             <section>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Prize</h3>
+              <p className="text-gray-700 leading-relaxed">
+                The grand winner will receive a block (or blocks) of cheese of their choosing, up to a total value of <strong>$40</strong>. The other participants will contribute in equal shares to buying the cheese.
+              </p>
+            </section>
+
+            <section>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Participants</h3>
               <p className="text-gray-700 leading-relaxed mb-4">
                 The challenge includes the following participants:
