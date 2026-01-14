@@ -7,6 +7,7 @@ export default async function ChangeLogPage() {
   await requireAuth()
   const supabase = await createClient()
 
+  // Fetch all changes
   const { data: changes, error } = await supabase
     .from('change_log')
     .select('*')
@@ -21,6 +22,87 @@ export default async function ChangeLogPage() {
     )
   }
 
+  if (!changes || changes.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-cheese-700">Change Log</h1>
+          <p className="text-gray-600 mt-2">Track all changes made to apps and transactions.</p>
+        </div>
+        <section className="bg-white rounded-lg shadow-lg p-6 border-2 border-cheese-300">
+          <div className="text-center py-12">
+            <p className="text-gray-500">No changes recorded yet.</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  // Get unique transaction IDs that need app names
+  const transactionIds = changes
+    .filter((c) => c.entity_type === 'transaction')
+    .map((c) => c.entity_id)
+
+  // Batch fetch app_ids for transactions
+  let transactionAppMap: Record<string, string> = {}
+  if (transactionIds.length > 0) {
+    const { data: transactions } = await supabase
+      .from('transactions')
+      .select('id, app_id')
+      .in('id', transactionIds)
+
+    if (transactions) {
+      transactionAppMap = Object.fromEntries(
+        transactions.map((t) => [t.id, t.app_id])
+      )
+    }
+  }
+
+  // Get unique app IDs that need names
+  const appIds = [
+    ...new Set([
+      ...changes
+        .filter((c) => c.entity_type === 'app')
+        .map((c) => c.entity_id),
+      ...Object.values(transactionAppMap),
+    ]),
+  ]
+
+  // Batch fetch app names
+  let appNameMap: Record<string, string> = {}
+  if (appIds.length > 0) {
+    const { data: apps } = await supabase
+      .from('apps')
+      .select('id, app_name')
+      .in('id', appIds)
+
+    if (apps) {
+      appNameMap = Object.fromEntries(
+        apps.map((a) => [a.id, a.app_name])
+      )
+    }
+  }
+
+  // Enrich changes with app names
+  const changesWithAppNames = changes.map((change) => {
+    let appName: string | null = null
+
+    if (change.entity_type === 'app') {
+      // For app changes, prefer stored values, fallback to fetched name
+      appName =
+        change.new_values?.app_name ||
+        change.old_values?.app_name ||
+        appNameMap[change.entity_id] ||
+        null
+    } else if (change.entity_type === 'transaction') {
+      // For transaction changes, get app_id from transaction, then app name
+      const appId = transactionAppMap[change.entity_id]
+      appName = appId ? appNameMap[appId] || null : null
+    }
+
+    return { ...change, app_name: appName }
+  })
+
   return (
     <div className="space-y-6">
       <div>
@@ -29,7 +111,7 @@ export default async function ChangeLogPage() {
       </div>
 
       <section className="bg-white rounded-lg shadow-lg p-6 border-2 border-cheese-300">
-        {!changes || changes.length === 0 ? (
+        {!changesWithAppNames || changesWithAppNames.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500">No changes recorded yet.</p>
           </div>
@@ -45,6 +127,9 @@ export default async function ChangeLogPage() {
                     User
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                    App
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                     Action
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
@@ -56,13 +141,16 @@ export default async function ChangeLogPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {changes.map((change: ChangeLog) => (
+                {changesWithAppNames.map((change: ChangeLog & { app_name?: string | null }) => (
                   <tr key={change.id}>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
                       {formatDateTime(change.created_at)}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {change.user_name}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                      {change.app_name || '-'}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
                       <span className="px-2 py-1 text-xs font-semibold rounded-full bg-cheese-100 text-cheese-800">
