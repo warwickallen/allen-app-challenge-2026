@@ -104,7 +104,7 @@ export default async function AppDetailPage({ params }: PageProps) {
               href={`/dashboard/apps/${params.id}/transactions/new`}
               className="bg-cheese-500 hover:bg-cheese-600 text-black font-semibold py-2 px-4 rounded-lg transition-colors shadow-md text-sm"
             >
-              + Add Transaction
+              + Record Transaction
             </Link>
           )}
         </div>
