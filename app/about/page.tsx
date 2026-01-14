@@ -115,13 +115,13 @@ export default async function AboutPage() {
                   <h4 className="font-semibold text-lg mb-2">Rankings</h4>
                   <p className="leading-relaxed">
                     <strong>App Rankings:</strong> All apps are ranked by total profit (highest to lowest).<br />
-                    <strong>Participant Rankings:</strong> Participants are ranked by their best-earning app's profit. Rankings update in real-time as transactions are added.
+                    <strong>Participant Rankings:</strong> Participants are ranked by their best-earning app&apos;s profit. Rankings update in real-time as transactions are added.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-2">Monthly Winners</h4>
                   <p className="leading-relaxed">
-                    Monthly winners are calculated based on rankings as of the 10th of each month. The system stores both the monthly app winner and the monthly participant winner. These winners are displayed in the leaderboard's Monthly Winners section.
+                    Monthly winners are calculated based on rankings as of the 10th of each month. The system stores both the monthly app winner and the monthly participant winner. These winners are displayed in the leaderboard&apos;s Monthly Winners section.
                   </p>
                 </div>
               </div>
