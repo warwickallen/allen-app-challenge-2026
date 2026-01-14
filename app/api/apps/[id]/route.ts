@@ -101,6 +101,7 @@ export async function PATCH(
       action_type: 'edit_app',
       entity_type: 'app',
       entity_id: app.id,
+      app_id: app.id,
       old_values: {
         app_name: existingApp.app_name,
         description: existingApp.description,
@@ -148,6 +149,7 @@ export async function DELETE(
       action_type: 'delete_app',
       entity_type: 'app',
       entity_id: params.id,
+      app_id: params.id,
       old_values: {
         app_name: existingApp.app_name,
         description: existingApp.description,

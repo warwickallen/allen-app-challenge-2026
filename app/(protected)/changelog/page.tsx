@@ -38,34 +38,14 @@ export default async function ChangeLogPage() {
     )
   }
 
-  // Get unique transaction IDs that need app names
-  const transactionIds = changes
-    .filter((c) => c.entity_type === 'transaction')
-    .map((c) => c.entity_id)
-
-  // Batch fetch app_ids for transactions
-  let transactionAppMap: Record<string, string> = {}
-  if (transactionIds.length > 0) {
-    const { data: transactions } = await supabase
-      .from('transactions')
-      .select('id, app_id')
-      .in('id', transactionIds)
-
-    if (transactions) {
-      transactionAppMap = Object.fromEntries(
-        transactions.map((t) => [t.id, t.app_id])
-      )
-    }
-  }
-
-  // Get unique app IDs that need names
+  // Get unique app IDs that need names (from app_id column)
   const appIds = [
-    ...new Set([
-      ...changes
-        .filter((c) => c.entity_type === 'app')
-        .map((c) => c.entity_id),
-      ...Object.values(transactionAppMap),
-    ]),
+    ...new Set(
+      changes
+        .filter((c) => c.app_id)
+        .map((c) => c.app_id)
+        .filter((id): id is string => id !== null)
+    ),
   ]
 
   // Batch fetch app names
@@ -87,17 +67,17 @@ export default async function ChangeLogPage() {
   const changesWithAppNames = changes.map((change) => {
     let appName: string | null = null
 
-    if (change.entity_type === 'app') {
-      // For app changes, prefer stored values, fallback to fetched name
+    if (change.app_id) {
+      // Use stored app_id to get app name
+      appName = appNameMap[change.app_id] || null
+    }
+
+    // Fallback: for app changes, try to get name from stored values
+    if (!appName && change.entity_type === 'app') {
       appName =
         change.new_values?.app_name ||
         change.old_values?.app_name ||
-        appNameMap[change.entity_id] ||
         null
-    } else if (change.entity_type === 'transaction') {
-      // For transaction changes, get app_id from transaction, then app name
-      const appId = transactionAppMap[change.entity_id]
-      appName = appId ? appNameMap[appId] || null : null
     }
 
     return { ...change, app_name: appName }

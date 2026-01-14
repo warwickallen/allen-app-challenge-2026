@@ -48,6 +48,7 @@ export interface ChangeLog {
   action_type: ActionType
   entity_type: EntityType
   entity_id: string
+  app_id: string | null
   old_values: Record<string, any> | null
   new_values: Record<string, any> | null
   created_at: string
