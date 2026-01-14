@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
       action_type: 'create_app',
       entity_type: 'app',
       entity_id: app.id,
+      app_id: app.id,
       old_values: null,
       new_values: {
         app_name: app.app_name,

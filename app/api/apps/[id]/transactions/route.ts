@@ -121,6 +121,7 @@ export async function POST(
       action_type: 'add_transaction',
       entity_type: 'transaction',
       entity_id: transaction.id,
+      app_id: params.id,
       old_values: null,
       new_values: {
         transaction_type: transaction.transaction_type,

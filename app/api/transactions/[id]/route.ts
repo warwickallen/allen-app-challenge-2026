@@ -120,6 +120,7 @@ export async function PATCH(
       action_type: 'edit_transaction',
       entity_type: 'transaction',
       entity_id: transaction.id,
+      app_id: existingTransaction.app_id,
       old_values: {
         transaction_type: existingTransaction.transaction_type,
         amount: existingTransaction.amount,
@@ -176,6 +177,7 @@ export async function DELETE(
       action_type: 'delete_transaction',
       entity_type: 'transaction',
       entity_id: params.id,
+      app_id: existingTransaction.app_id,
       old_values: {
         transaction_type: existingTransaction.transaction_type,
         amount: existingTransaction.amount,
