@@ -11,6 +11,7 @@ export default function NewAppPage() {
   const [formData, setFormData] = useState({
     app_name: '',
     description: '',
+    url: '',
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -94,6 +95,22 @@ export default function NewAppPage() {
             placeholder="Describe your app (optional)"
           />
           <p className="text-xs text-gray-500 mt-1">{formData.description.length}/2000 characters</p>
+        </div>
+
+        <div>
+          <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+            App URL
+          </label>
+          <input
+            id="url"
+            type="url"
+            maxLength={500}
+            value={formData.url}
+            onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cheese-500 focus:border-cheese-500"
+            placeholder="https://example.com (optional)"
+          />
+          <p className="text-xs text-gray-500 mt-1">Link to your app (optional)</p>
         </div>
 
         <div className="flex justify-end space-x-4">

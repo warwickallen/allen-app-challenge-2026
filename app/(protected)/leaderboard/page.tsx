@@ -97,7 +97,18 @@ export default async function LeaderboardPage() {
                       </span>
                     </td>
                     <td className="px-4 py-4">
-                      <div className="text-sm font-medium text-gray-900">{app.app_name}</div>
+                      {app.url ? (
+                        <a
+                          href={app.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-medium text-cheese-600 hover:text-cheese-700 hover:underline"
+                        >
+                          {app.app_name}
+                        </a>
+                      ) : (
+                        <div className="text-sm font-medium text-gray-900">{app.app_name}</div>
+                      )}
                       {app.description && (
                         <div className="text-sm text-gray-500 mt-1">{app.description}</div>
                       )}

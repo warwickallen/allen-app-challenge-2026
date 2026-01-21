@@ -62,7 +62,7 @@ export async function PATCH(
     }
 
     const body = await request.json()
-    const { app_name, description } = body
+    const { app_name, description, url } = body
 
     const updates: any = {}
     if (app_name !== undefined) {
@@ -80,6 +80,13 @@ export async function PATCH(
         return NextResponse.json({ error: 'Description must be 2000 characters or less' }, { status: 400 })
       }
       updates.description = description?.trim() || null
+    }
+
+    if (url !== undefined) {
+      if (url && url.trim().length > 0 && url.length > 500) {
+        return NextResponse.json({ error: 'URL must be 500 characters or less' }, { status: 400 })
+      }
+      updates.url = url?.trim() || null
     }
 
     // Update app
@@ -105,10 +112,12 @@ export async function PATCH(
       old_values: {
         app_name: existingApp.app_name,
         description: existingApp.description,
+        url: existingApp.url,
       },
       new_values: {
         app_name: app.app_name,
         description: app.description,
+        url: app.url,
       },
     })
 
@@ -130,7 +139,7 @@ export async function DELETE(
     // Check permissions
     const { data: existingApp } = await supabase
       .from('apps')
-      .select('participant_id, app_name, description')
+      .select('participant_id, app_name, description, url')
       .eq('id', params.id)
       .single()
 
@@ -153,6 +162,7 @@ export async function DELETE(
       old_values: {
         app_name: existingApp.app_name,
         description: existingApp.description,
+        url: existingApp.url,
       },
       new_values: null,
     })

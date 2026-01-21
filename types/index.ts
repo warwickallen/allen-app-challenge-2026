@@ -14,6 +14,7 @@ export interface App {
   participant_id: string
   app_name: string
   description: string | null
+  url: string | null
   created_at: string
   updated_at: string
 }

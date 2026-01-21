@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerClient()
     const body = await request.json()
 
-    const { app_name, description } = body
+    const { app_name, description, url } = body
 
     // Validation
     if (!app_name || app_name.trim().length === 0) {
@@ -55,6 +55,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Description must be 2000 characters or less' }, { status: 400 })
     }
 
+    if (url && url.trim().length > 0 && url.length > 500) {
+      return NextResponse.json({ error: 'URL must be 500 characters or less' }, { status: 400 })
+    }
+
     // Create app
     const { data: app, error: appError } = await supabase
       .from('apps')
@@ -62,6 +66,7 @@ export async function POST(request: NextRequest) {
         participant_id: user.id,
         app_name: app_name.trim(),
         description: description?.trim() || null,
+        url: url?.trim() || null,
       })
       .select()
       .single()
@@ -82,6 +87,7 @@ export async function POST(request: NextRequest) {
       new_values: {
         app_name: app.app_name,
         description: app.description,
+        url: app.url,
       },
     })
 
