@@ -97,18 +97,33 @@ export default async function LeaderboardPage() {
                       </span>
                     </td>
                     <td className="px-4 py-4">
-                      {app.url && app.url.trim() ? (
-                        <a
-                          href={app.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm font-medium text-cheese-600 hover:text-cheese-700 hover:underline"
-                        >
-                          {app.app_name}
-                        </a>
-                      ) : (
+                      <div className="flex items-center gap-2">
                         <div className="text-sm font-medium text-gray-900">{app.app_name}</div>
-                      )}
+                        {app.url && app.url.trim() && (
+                          <a
+                            href={app.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-800 hover:text-gray-900 transition-colors"
+                            aria-label={`Open ${app.app_name} in new window`}
+                          >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                       {app.description && (
                         <div className="text-sm text-gray-500 mt-1">{app.description}</div>
                       )}
