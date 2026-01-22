@@ -97,7 +97,7 @@ export default async function LeaderboardPage() {
                       </span>
                     </td>
                     <td className="px-4 py-4">
-                      {app.url ? (
+                      {app.url && app.url.trim() ? (
                         <a
                           href={app.url}
                           target="_blank"

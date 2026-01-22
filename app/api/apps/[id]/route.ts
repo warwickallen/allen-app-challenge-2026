@@ -49,7 +49,7 @@ export async function PATCH(
     // Check permissions
     const { data: existingApp } = await supabase
       .from('apps')
-      .select('participant_id, app_name, description')
+      .select('participant_id, app_name, description, url')
       .eq('id', params.id)
       .single()
 
